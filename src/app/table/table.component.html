@@ -1,0 +1,167 @@
+<div class="container">
+  <h1 class="h1">Dynamic Row Table</h1>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col" class="text-center"></th>
+        <th scope="col" class="text-center">
+          <!-- select -->
+          <input type="checkbox" />
+          select
+        </th>
+        <th scope="col" class="text-center">#</th>
+        <th scope="col" class="text-center">Details</th>
+        <th scope="col" class="text-center">Rules</th>
+        <th scope="col" class="text-center">Current Hour TR Rate</th>
+        <!-- <th scope="col" class="text-center">Currency To</th>
+        <th scope="col" class="text-center">Low / Hi cost</th>
+        <th scope="col" class="text-center">WACC</th>
+        <th scope="col" class="text-center">Breakeven</th>
+        <th scope="col" class="text-center">Competitor</th>
+        <th scope="col" class="text-center">Prev. Rate</th> -->
+        <th scope="col" class="text-center">Prev Rate</th>
+        <th scope="col" class="text-center">Quoted Rate</th>
+        <th scope="col" class="text-center">Active Status</th>
+      </tr>
+    </thead>
+    <tbody
+      [formGroup]="mainForm"
+      cdkDropList
+      (cdkDropListDropped)="onRowDropped($event)"
+    >
+      <ng-container formArrayName="dynamicRowList">
+        <tr
+          *ngFor="let rowData of dynamicRowList.controls; let i = index"
+          cdkDrag
+          cdkDragLockAxis="y"
+        >
+          <!-- drag handle -->
+          <th class="col-xs align-middle">
+            <div class="drag-handle">
+              <ng-container [ngTemplateOutlet]="dragHandleTmpl"> </ng-container>
+            </div>
+          </th>
+          <!-- select -->
+          <th class="col-xs text-center align-middle">
+            <input type="checkbox" />
+          </th>
+          <!-- # -->
+          <th class="col-sm text-center align-middle">
+            {{ rowData.value.rowNo }}
+          </th>
+          <td class="col-xl">
+            <dl class="row">
+              <!-- CURRENCY FROM-->
+              <dt class="col-md-5 col-xl-5 pb-0 mb-0">Currency From:</dt>
+              <dd class="col-md-6 col-xl-7 mb-0">USD</dd>
+              <!-- CURRENCY TO-->
+              <dt class="col-md-5 col-xl-5">Currency To:</dt>
+              <dd class="col-sm-6 col-xl-7 mb-0">USD</dd>
+              <!-- LOW COST-->
+              <dt class="col-md-5 col-xl-5 mb-0">Low Cost:</dt>
+              <dd class="col-sm-6 col-xl-7 mb-0">
+                4.20010100
+                <br />
+                <span class="alert alert-danger p-0">+2.5315%</span>
+              </dd>
+              <!-- HI COST-->
+              <dt class="col-md-5 col-xl-5 mb-0">Hi Cost:</dt>
+              <dd class="col-sm-6 col-xl-7 mb-0">
+                4.20010100
+                <br />
+                <span class="alert alert-success p-0">+2.5315%</span>
+              </dd>
+              <!-- WACC-->
+              <dt class="col-md-5 col-xl-5 mb-0">WACC:</dt>
+              <dd class="col-sm-6 col-xl-7 mb-0">
+                4.20010100
+                <br />
+                <span class="alert alert-success p-0">+2.5315%</span>
+              </dd>
+              <!-- BREAKEVEN-->
+              <dt class="col-md-5 col-xl-5 mb-0">Breakeven:</dt>
+              <dd class="col-sm-6 col-xl-7 mb-0">
+                4.20010100
+                <br />
+                <span class="alert alert-success p-0">+2.5315%</span>
+              </dd>
+              <!-- COMPETITOR-->
+              <dt class="col-md-5 col-xl-5 mb-0">Competitor:</dt>
+              <dd class="col-sm-6 col-xl-7 mb-0">MerchanTrade: 426</dd>
+              <!-- STATUS-->
+              <dt class="col-md-5 col-xl-5 mb-0">Status:</dt>
+              <dd class="col-sm-6 col-xl-7 mb-0">
+                <span class="alert alert-success py-0"> Active </span>
+              </dd>
+            </dl>
+          </td>
+          <td class="col-lg align-middle text-center">
+            <button class="btn btn-danger mb-2">Compare to TR</button>
+            <button class="btn btn-secondary mb-2">Compare to WACC</button>
+            <button class="btn btn-danger mb-2">Initialize Price</button>
+          </td>
+          <td class="col-xs align-middle">
+            4.20010100 | 18/04/2022 09:00:00 AM
+          </td>
+          <td class="col-sm align-middle">4.20000000</td>
+          <td class="col-lg align-middle">
+            <input type="number" value="4.10000000" />
+            <div class="row mx-1">
+              <span class="alert alert-danger my-1 py-0 px-1">
+                <em class="">
+                  <small>compare to TR: 5.4043%</small>
+                </em>
+              </span>
+            </div>
+            <div class="row mx-1">
+              <span class="alert alert-success my-1 py-0 px-1">
+                <em class="text-success">
+                  <small>compare to WACC: 5.4043%</small>
+                </em>
+              </span>
+            </div>
+            <div class="mt-5 text-center">
+              <button class="btn btn-primary mt-2">Get Prev Rate</button>
+            </div>
+          </td>
+          <td class="col-xs align-middle">
+            <div class="form-check form-switch">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                role="switch"
+                id="flexSwitchCheckDefault"
+              />
+              <label class="form-check-label" for="flexSwitchCheckDefault"
+                >Active</label
+              >
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+
+  <div class="row m-3">
+    <div class="col d-flex justify-content-end">
+      <button class="btn btn-primary">Update</button>
+    </div>
+  </div>
+</div>
+
+<ng-template #dragHandleTmpl>
+  <svg
+    class="bi bi-list handle"
+    width="1em"
+    height="1em"
+    viewBox="0 0 16 16"
+    fill="currentColor"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fill-rule="evenodd"
+      d="M2.5 11.5A.5.5 0 013 11h10a.5.5 0 010 1H3a.5.5 0 01-.5-.5zm0-4A.5.5 0 013 7h10a.5.5 0 010 1H3a.5.5 0 01-.5-.5zm0-4A.5.5 0 013 3h10a.5.5 0 010 1H3a.5.5 0 01-.5-.5z"
+      clip-rule="evenodd"
+    />
+  </svg>
+</ng-template>
