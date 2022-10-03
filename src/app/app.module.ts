@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { CommonModule } from '@angular/common';
 import { TableComponent } from './table/table.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MainComponent } from './main/main.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AppRoutingModule,
     NgbModule,
   ],
-  declarations: [AppComponent, HelloComponent, TableComponent],
+  declarations: [AppComponent, HelloComponent, TableComponent, MainComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
